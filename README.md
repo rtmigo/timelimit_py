@@ -18,14 +18,12 @@ from timelimited import limit_thread, limit_process
 def sluggish(a, b):
   ...
   return a+b
-  
-  
 
 # will run sluggish(1, 2) in parallel thread no more than 5 seconds
-a_plus_b = limit_thread(may_be_too_slow, (1, 2), timeout=5)
+a_plus_b = limit_thread(sluggish, (1, 2), timeout=5)
 
 # will run sluggish(1, 2) in parallel process no more than 5 seconds
-a_plus_b = limit_process(may_be_too_slow, (1, 2), timeout=5)
+a_plus_b = limit_process(sluggish, (1, 2), timeout=5)
 ```
 
 ## If the time is up
