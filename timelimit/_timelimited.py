@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: (c) 2020 Artёm IG <github.com/rtmigo>
 # SPDX-License-Identifier: MIT
 
-from multiprocessing import Pool
+from multiprocessing.pool import Pool as BasePool
 from typing import *
 
 T = TypeVar("T")
@@ -17,7 +17,8 @@ class TimeLimitExceeded(Exception):
     pass
 
 
-def _limit(pool: Pool, func: Callable[..., T], args=None, timeout: float = None,
+def _limit(pool: BasePool, func: Callable[..., T], args=None,
+           timeout: float = None,
            default=TimeLimitExceeded):
     from multiprocessing.context import TimeoutError as MpTimeoutError
     try:
