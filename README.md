@@ -13,7 +13,7 @@ pip3 install timelimited
 # Use
 
 ``` python3
-from timelimited import limit_thread, limit_process 
+from timelimited import limit_thread, limit_process, LimitedTimeOut
 
 def sluggish(a, b):
   ...
