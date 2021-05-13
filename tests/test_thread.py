@@ -49,6 +49,9 @@ class TestRunInThread(unittest.TestCase):
     def test_two_args(self):
         self.assertEqual(limit_thread(concat, args=("A", "B"), timeout=1), "AB")
 
+    def test_two_args_no_timelimit(self):
+        self.assertEqual(limit_thread(concat, args=("A", "B")), "AB")
+
     def test_timeout_none_two_args(self):
         self.assertEqual(limit_thread(concat, args=("A", "B"), timeout=None),
                          "AB")
@@ -60,5 +63,3 @@ class TestRunInThread(unittest.TestCase):
     def test_timeout_none_no_args_as_empty_list(self):
         self.assertEqual(limit_thread(getSmiley, timeout=None, args=[]),
                          ":)")
-
-
