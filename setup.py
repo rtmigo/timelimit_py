@@ -24,6 +24,7 @@ setup(
     long_description=(Path(__file__).parent / 'README.md').read_text(),
     long_description_content_type='text/markdown',
 
+
     license='MIT',
 
     classifiers=[
