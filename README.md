@@ -1,4 +1,4 @@
-# [timelimited](https://github.com/rtmigo/timelimited_py#readme)
+# [timelimit](https://github.com/rtmigo/timelimit_py#readme)
 
 Unified way to call time-limited functions in parallel threads or processes.
 
@@ -13,7 +13,7 @@ pip3 install timelimit
 # Use
 
 ``` python3
-from timelimit import limit_thread, limit_process, LimitedTimeOut
+from timelimit import limit_thread, limit_process, TimeLimitExceeded
 
 def sluggish(a, b):
   ...
@@ -29,7 +29,7 @@ a_plus_b = limit_process(sluggish, (1, 2), timeout=5)
 ## If the time is up
 
 If the function did not complete its work within the specified time, a 
-`LimitedTimeOut` exception is thrown.
+`TimeLimitExceeded` exception is thrown.
 
 ``` python3
 try:
@@ -39,7 +39,7 @@ except LimitedTimeOut:
     print("Oops!")  
 ```
 
-If `default` is set to something other than `LimitedTimeOut`, no exception is 
+If `default` is set to something other than `TimeLimitExceeded`, no exception is 
 thrown, but the `default` is returned.
 
 ``` python3
