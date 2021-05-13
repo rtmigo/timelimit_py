@@ -17,7 +17,7 @@ from timelimit import limit_thread, limit_process, TimeLimitExceeded
 
 def sluggish(a, b):
   ...
-  return a+b
+  return a + b
 
 # will run sluggish(1, 2) in parallel thread no more than 5 seconds
 a_plus_b = limit_thread(sluggish, (1, 2), timeout=5)
