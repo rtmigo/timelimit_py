@@ -62,7 +62,7 @@ limit_thread(sluggish, (1, 2))
 limit_thread(sluggish, (1, 2), timeout=float('inf')) 
 ```
 
-If you specify the value `timeout = None`, then the `sluggish` function will be
+If you specify the value `timeout = None`, then the `sluggish` will be
 executed like a regular function, without starting processes or threads.
 
 ``` python3
