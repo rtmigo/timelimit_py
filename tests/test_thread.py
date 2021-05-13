@@ -37,6 +37,14 @@ class TestRunInThread(unittest.TestCase):
 
         self.assertEqual(limit_thread(getSmiley), ":)")
 
+    def test_no_args_empty_list(self):
+        def getSmiley():
+            return ":)"
+
+        self.assertEqual(limit_thread(getSmiley, args=[]),
+                         ":)")
+
+
     def test_two_args(self):
         def getSmiley():
             return ":)"
