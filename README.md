@@ -49,3 +49,12 @@ result = limit_thread(sluggish, (1, 2), timeout=5, default=-1)
 if result == -1:
     print("Oops!")
 ```
+
+## If time doesn't matter
+
+If the `timeout` parameter is `None`, the function will run in the same way, but without time limits.
+
+``` python3
+result = limit_thread(sluggish, (1, 2), 
+                      timeout = 5 if in_hurry else None)
+```

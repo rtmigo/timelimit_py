@@ -23,8 +23,12 @@ def pickleable_slow():
 
 class TestProcess(unittest.TestCase):
 
-    def test_no_args(self):
+    def test_no_args_none(self):
         self.assertEqual(limit_process(pickleable_getSmiley),
+                         ":)")
+
+    def test_no_args_empty_list(self):
+        self.assertEqual(limit_process(pickleable_getSmiley, args=[]),
                          ":)")
 
     def test_two_args(self):
