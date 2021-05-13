@@ -3,17 +3,17 @@ from pathlib import Path
 from setuptools import setup
 
 constants = SourceFileLoader('constants',
-                             'timelimited/_constants.py').load_module()
+                             'timelimit/_constants.py').load_module()
 
 setup(
-    name="timelimited",
+    name="timelimit",
     version=constants.__dict__['__version__'],
     author="Artёm IG",
     author_email="ortemeo@gmail.com",
     url='https://github.com/rtmigo/timelimited_py#readme',
 
     install_requires=[],
-    packages=['timelimited'],
+    packages=['timelimit'],
 
     description="Unified way to call time-limited functions in parallel "
                 "threads or processes",

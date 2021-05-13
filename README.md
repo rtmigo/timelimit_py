@@ -7,13 +7,13 @@ Tested with Python 3.6-3.9 on macOS, Ubuntu and Windows.
 # Install
 
 ``` bash
-pip3 install timelimited
+pip3 install timelimit
 ```
 
 # Use
 
 ``` python3
-from timelimited import limit_thread, limit_process, LimitedTimeOut
+from timelimit import limit_thread, limit_process, LimitedTimeOut
 
 def sluggish(a, b):
   ...
