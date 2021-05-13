@@ -1,6 +1,6 @@
 import unittest
 
-from timelimited import timelimited_process, LimitedTimeOutError
+from timelimited import limit_process, LimitedTimeOut
 
 
 def pickleable_getSmiley():
@@ -24,24 +24,24 @@ def pickleable_slow():
 class TestProcess(unittest.TestCase):
 
     def test_no_args(self):
-        self.assertEqual(timelimited_process(pickleable_getSmiley),
+        self.assertEqual(limit_process(pickleable_getSmiley),
                          ":)")
 
     def test_two_args(self):
         self.assertEqual(
-            timelimited_process(pickleable_concat, args=("A", "B")),
+            limit_process(pickleable_concat, args=("A", "B")),
             "AB")
 
     def test_fast_no_timeout(self):
         self.assertEqual(
-            timelimited_process(pickleable_fast, timeout=0.5,
-                                default=13), 777)  # успели получить результат
+            limit_process(pickleable_fast, timeout=0.5,
+                          default=13), 777)  # успели получить результат
 
     def test_timeout_default(self):
         self.assertEqual(
-            timelimited_process(pickleable_slow, timeout=0.5,
-                                default=13), 13)  # не успели
+            limit_process(pickleable_slow, timeout=0.5,
+                          default=13), 13)  # не успели
 
     def test_timeout_error(self):
-        with self.assertRaises(LimitedTimeOutError):
-            timelimited_process(pickleable_slow, timeout=0.5)
+        with self.assertRaises(LimitedTimeOut):
+            limit_process(pickleable_slow, timeout=0.5)

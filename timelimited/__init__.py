@@ -2,4 +2,4 @@
 # SPDX-License-Identifier: MIT
 
 
-from ._timelimited import timelimited_thread, timelimited_process, LimitedTimeOutError
+from ._timelimited import limit_thread, limit_process, LimitedTimeOut
