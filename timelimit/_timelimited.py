@@ -7,7 +7,7 @@ from typing import *
 T = TypeVar("T")
 
 
-class LimitedTimeOutError(Exception):
+class TimeLimitExceeded(Exception):
     # я предпочитаю выкидывать такое исключение, поскольку TimeoutError,
     # определенная в builtins.py, унаследована от OSError (я подозреваю, что
     # имеет специальное назначение). А TimeoutError, определенная в
@@ -15,8 +15,8 @@ class LimitedTimeOutError(Exception):
     pass
 
 
-def timelimited_thread(func: Callable[..., T], args=None, timeout: float = None,
-                       default=LimitedTimeOutError) -> T:
+def limit_thread(func: Callable[..., T], args=None, timeout: float = None,
+                 default=TimeLimitExceeded) -> T:
     # запускает функцию func в параллельном потоке.
     #
     # Если func успевает вернуть результат за время timeout, возвращаем этот
@@ -34,16 +34,16 @@ def timelimited_thread(func: Callable[..., T], args=None, timeout: float = None,
             return asyncResult.get(timeout=timeout)
     except MpTimeoutError:
 
-        if default == LimitedTimeOutError:
-            raise LimitedTimeOutError
+        if default == TimeLimitExceeded:
+            raise TimeLimitExceeded
         else:
             # возвращаем значение по умолчанию
             return default
 
 
-def timelimited_process(func: Callable[..., T], args=None,
-                        timeout: float = None,
-                        default=LimitedTimeOutError) -> T:
+def limit_process(func: Callable[..., T], args=None,
+                  timeout: float = None,
+                  default=TimeLimitExceeded) -> T:
     # запускает функцию func в параллельном процессе.
     #
     # Если func успевает вернуть результат за время timeout, возвращаем этот
@@ -61,7 +61,7 @@ def timelimited_process(func: Callable[..., T], args=None,
             return asyncResult.get(timeout=timeout)
     except MpTimeoutError:
         # возвращаем значение по умолчанию
-        if default == LimitedTimeOutError:
-            raise LimitedTimeOutError
+        if default == TimeLimitExceeded:
+            raise TimeLimitExceeded
         else:
             return default
