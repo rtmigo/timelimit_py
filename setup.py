@@ -15,10 +15,10 @@ setup(
     install_requires=[],
     packages=['timelimited'],
 
-    description="Unified was to call functions with timeout in "
-                "parallel processes or threads.",
+    description="Unified way to call time-limited functions in parallel "
+                "threads or processes",
 
-    keywords="timeout time out finction thread process "
+    keywords="timeout time out function thread process "
              "threading multiprocessing".split(),
 
     long_description=(Path(__file__).parent / 'README.md').read_text(),
