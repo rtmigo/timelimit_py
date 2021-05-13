@@ -35,12 +35,12 @@ If the function did not complete its work within the specified time, a
 try:
     limit_thread(sluggish, (1, 2), timeout=5)
     
-except LimitedTimeOut:
+except TimeLimitExceeded:
     print("Oops!")  
 ```
 
-If `default` is set to something other than `TimeLimitExceeded`, no exception is 
-thrown, but the `default` is returned.
+If you set the `default` argument (at least to `None`), the default value 
+is returned instead of an exception.
 
 ``` python3
 result = limit_thread(sluggish, (1, 2), timeout=5, default=-1)
