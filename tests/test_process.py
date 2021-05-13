@@ -1,6 +1,6 @@
 import unittest
 
-from timelimit import limit_process, LimitedTimeOut
+from timelimit import limit_process, TimeLimitExceeded
 
 
 def pickleable_getSmiley():
@@ -43,5 +43,5 @@ class TestProcess(unittest.TestCase):
                           default=13), 13)  # не успели
 
     def test_timeout_error(self):
-        with self.assertRaises(LimitedTimeOut):
+        with self.assertRaises(TimeLimitExceeded):
             limit_process(pickleable_slow, timeout=0.5)

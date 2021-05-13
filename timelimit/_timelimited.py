@@ -7,7 +7,7 @@ from typing import *
 T = TypeVar("T")
 
 
-class LimitedTimeOut(Exception):
+class TimeLimitExceeded(Exception):
     # я предпочитаю выкидывать такое исключение, поскольку TimeoutError,
     # определенная в builtins.py, унаследована от OSError (я подозреваю, что
     # имеет специальное назначение). А TimeoutError, определенная в
@@ -16,7 +16,7 @@ class LimitedTimeOut(Exception):
 
 
 def limit_thread(func: Callable[..., T], args=None, timeout: float = None,
-                 default=LimitedTimeOut) -> T:
+                 default=TimeLimitExceeded) -> T:
     # запускает функцию func в параллельном потоке.
     #
     # Если func успевает вернуть результат за время timeout, возвращаем этот
@@ -34,8 +34,8 @@ def limit_thread(func: Callable[..., T], args=None, timeout: float = None,
             return asyncResult.get(timeout=timeout)
     except MpTimeoutError:
 
-        if default == LimitedTimeOut:
-            raise LimitedTimeOut
+        if default == TimeLimitExceeded:
+            raise TimeLimitExceeded
         else:
             # возвращаем значение по умолчанию
             return default
@@ -43,7 +43,7 @@ def limit_thread(func: Callable[..., T], args=None, timeout: float = None,
 
 def limit_process(func: Callable[..., T], args=None,
                   timeout: float = None,
-                  default=LimitedTimeOut) -> T:
+                  default=TimeLimitExceeded) -> T:
     # запускает функцию func в параллельном процессе.
     #
     # Если func успевает вернуть результат за время timeout, возвращаем этот
@@ -61,7 +61,7 @@ def limit_process(func: Callable[..., T], args=None,
             return asyncResult.get(timeout=timeout)
     except MpTimeoutError:
         # возвращаем значение по умолчанию
-        if default == LimitedTimeOut:
-            raise LimitedTimeOut
+        if default == TimeLimitExceeded:
+            raise TimeLimitExceeded
         else:
             return default

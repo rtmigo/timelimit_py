@@ -5,7 +5,7 @@
 import unittest
 import time
 
-from timelimit import limit_thread, LimitedTimeOut
+from timelimit import limit_thread, TimeLimitExceeded
 
 
 def fast():
@@ -28,7 +28,7 @@ class TestRunInThread(unittest.TestCase):
                          13)  # не успели
 
     def test_timeout_exception(self):
-        with self.assertRaises(LimitedTimeOut):
+        with self.assertRaises(TimeLimitExceeded):
             limit_thread(slow, timeout=0.1)
 
     def test_no_args(self):
