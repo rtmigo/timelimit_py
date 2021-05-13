@@ -34,6 +34,7 @@ If the function did not complete its work within the specified time, a
 ``` python3
 try:
     limit_thread(sluggish, (1, 2), timeout=5)
+    
 except LimitedTimeOut:
     print("Oops!")  
 ```
