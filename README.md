@@ -1,7 +1,7 @@
 # [timelimit](https://github.com/rtmigo/timelimit_py#readme)
 
-Sets the time limit for slow-running functions.
-Runs functions in parallel threads or processes.
+Sets the time limit for slow-running functions. Runs functions in parallel
+threads or processes.
 
 Tested with Python 3.6-3.9 on macOS, Ubuntu and Windows.
 
@@ -29,7 +29,7 @@ a_plus_b = limit_process(sluggish, (1, 2), timeout=5)
 
 ## If the time is up
 
-If the function did not complete its work within the specified time, a 
+If the function did not complete its work within the specified time, a
 `TimeLimitExceeded` exception is thrown.
 
 ``` python3
@@ -40,8 +40,8 @@ except TimeLimitExceeded:
     print("Oops!")  
 ```
 
-If you set the `default` argument (at least to `None`), the default value 
-is returned instead of an exception.
+If you set the `default` argument (at least to `None`), the default value is
+returned instead of an exception.
 
 ``` python3
 result = limit_thread(sluggish, (1, 2), timeout=5, default=-1)
@@ -52,9 +52,28 @@ if result == -1:
 
 ## If time doesn't matter
 
-If the `timeout` parameter is `None`, the function will run in the same way, but without time limits.
+If you do not specify the `timeout` parameter it will default to `float('inf')`.
+The `sluggish` function will run in a parallel thread or process, but without
+time constraints.
 
 ``` python3
-result = limit_thread(sluggish, (1, 2), 
-                      timeout = 5 if in_hurry else None)
+# both call run the function in parallel thread without time limits
+limit_thread(sluggish, (1, 2))  
+limit_thread(sluggish, (1, 2), timeout=float('inf')) 
+```
+
+If you specify the value `timeout = None`, then the `sluggish` will be
+executed like a regular function, without starting processes or threads.
+
+``` python3
+# the following calls are equivalent
+sluggish(1, 2)
+limit_thread(sluggish, (1, 2), timeout=None)
+```
+
+Thus, the limitation can be made optional and resource-saving.
+
+``` python3
+limit_thread(sluggish, (1, 2), 
+             timeout = 5 if in_hurry else None)
 ```
