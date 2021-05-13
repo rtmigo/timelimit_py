@@ -10,20 +10,18 @@ setup(
     version=constants.__dict__['__version__'],
     author="Artёm IG",
     author_email="ortemeo@gmail.com",
-    url='https://github.com/rtmigo/timelimited_py#readme',
+    url='https://github.com/rtmigo/timelimit_py#readme',
 
     install_requires=[],
     packages=['timelimit'],
 
-    description="Unified way to call time-limited functions in parallel "
-                "threads or processes",
+    description="Sets the time limit for slow-running functions.",
 
     keywords="timeout time out function thread process "
              "threading multiprocessing".split(),
 
     long_description=(Path(__file__).parent / 'README.md').read_text(),
     long_description_content_type='text/markdown',
-
 
     license='MIT',
 

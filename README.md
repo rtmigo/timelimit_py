@@ -1,6 +1,7 @@
 # [timelimit](https://github.com/rtmigo/timelimit_py#readme)
 
-Unified way to call time-limited functions in parallel threads or processes.
+Sets the time limit for slow-running functions.
+Runs functions in parallel threads or processes.
 
 Tested with Python 3.6-3.9 on macOS, Ubuntu and Windows.
 
