@@ -17,9 +17,18 @@ class TimeLimitExceeded(Exception):
     pass
 
 
-def _limit(pool: BasePool, func: Callable[..., T], args=None,
-           timeout: float = None,
-           default=TimeLimitExceeded):
+INF = float('inf')
+
+
+def _limit(pool: BasePool, func: Callable[..., T], args,
+           timeout: float,
+           default: Union[T, TimeLimitExceeded]):
+    if timeout is None:
+        if args is not None:
+            return func(*args)
+        else:
+            return func()
+
     from multiprocessing.context import TimeoutError as MpTimeoutError
     try:
         with pool:
@@ -27,7 +36,8 @@ def _limit(pool: BasePool, func: Callable[..., T], args=None,
                 async_result = pool.apply_async(func, args=args)
             else:
                 async_result = pool.apply_async(func)
-            return async_result.get(timeout=timeout)
+            assert timeout is not None
+            return async_result.get(timeout=timeout if timeout != INF else None)
     except MpTimeoutError:
 
         if default == TimeLimitExceeded:
@@ -36,8 +46,8 @@ def _limit(pool: BasePool, func: Callable[..., T], args=None,
             return default
 
 
-def limit_thread(func: Callable[..., T], args=None, timeout: float = None,
-                 default=TimeLimitExceeded) -> T:
+def limit_thread(func: Callable[..., T], args=None, timeout: Optional[float] = INF,
+                 default: Union[T, TimeLimitExceeded] = TimeLimitExceeded) -> T:
     """
     Runs the `func` in a parallel thread and waits for the result.
 
@@ -55,8 +65,9 @@ def limit_thread(func: Callable[..., T], args=None, timeout: float = None,
 
 
 def limit_process(func: Callable[..., T], args=None,
-                  timeout: float = None,
-                  default=TimeLimitExceeded) -> T:
+                  timeout: Optional[float] = INF,
+                  default: Union[
+                      T, TimeLimitExceeded] = TimeLimitExceeded) -> T:
     """
     Runs the `func` in a parallel process and waits for the result.
 
