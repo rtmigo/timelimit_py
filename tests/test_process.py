@@ -1,6 +1,6 @@
 import unittest
 
-from timelimited import limit_process, LimitedTimeOut
+from timelimit import limit_process, LimitedTimeOut
 
 
 def pickleable_getSmiley():

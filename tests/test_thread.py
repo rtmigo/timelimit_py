@@ -5,7 +5,7 @@
 import unittest
 import time
 
-from timelimited import limit_thread, LimitedTimeOut
+from timelimit import limit_thread, LimitedTimeOut
 
 
 def fast():
