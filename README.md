@@ -1,6 +1,7 @@
 # [timelimit](https://github.com/rtmigo/timelimit_py#readme)
 
-Unified way to call time-limited functions in parallel threads or processes.
+Sets the time limit for slow-running functions.
+Runs functions in parallel threads or processes.
 
 Tested with Python 3.6-3.9 on macOS, Ubuntu and Windows.
 
@@ -17,7 +18,7 @@ from timelimit import limit_thread, limit_process, TimeLimitExceeded
 
 def sluggish(a, b):
   ...
-  return a+b
+  return a + b
 
 # will run sluggish(1, 2) in parallel thread no more than 5 seconds
 a_plus_b = limit_thread(sluggish, (1, 2), timeout=5)
@@ -35,12 +36,12 @@ If the function did not complete its work within the specified time, a
 try:
     limit_thread(sluggish, (1, 2), timeout=5)
     
-except LimitedTimeOut:
+except TimeLimitExceeded:
     print("Oops!")  
 ```
 
-If `default` is set to something other than `TimeLimitExceeded`, no exception is 
-thrown, but the `default` is returned.
+If you set the `default` argument (at least to `None`), the default value 
+is returned instead of an exception.
 
 ``` python3
 result = limit_thread(sluggish, (1, 2), timeout=5, default=-1)
